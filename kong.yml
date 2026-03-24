@@ -22,3 +22,11 @@ services:
         paths:
           - /
         strip_path: false
+
+  - name: rabbitmq-management
+    url: http://10.0.0.6:15672
+    routes:
+      - name: rabbitmq-ui
+        paths:
+          - /rabbitmq
+        strip_path: true
