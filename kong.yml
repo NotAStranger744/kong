@@ -30,3 +30,8 @@ services:
         paths:
           - /rabbitmq
         strip_path: true
+    plugins:
+      - name: pre-function
+        config:
+          access: #redirect /rabbitmq to /rabbitmq/
+            - 'if kong.request.get_path() == "/rabbitmq" then return kong.response.exit(301, "Redirecting...", {["Location"] = "/rabbitmq/"}) end'
