@@ -9,11 +9,15 @@ services:
         paths:
           - /joke
         strip_path: false
-    plugins:
-      - name: rate-limiting
-        config:
-          minute: 5
-          policy: local
+        plugins:
+          - name: rate-limiting
+            config:
+              minute: 5
+              policy: local
+      - name: joke-docs
+        paths:
+          - /joke/docs
+        strip_path: false
 
   - name: submit-service
     url: http://10.0.0.6:3001
