@@ -5,6 +5,15 @@ services:
   - name: joke-service
     url: http://10.0.0.4:3000
     routes:
+      - name: root-redirect
+        paths:
+          - /
+        plugins:
+          - name: pre-function
+            config:
+              access:
+                #redirect / to /joke
+                - 'if kong.request.get_path() == "/" then return kong.response.exit(301, "Redirecting...", {["Location"] = "/joke"}) end'
       - name: joke-api
         paths:
           - /joke
@@ -22,9 +31,10 @@ services:
   - name: submit-service
     url: http://10.0.0.6:3001
     routes:
-      - name: submit-ui-and-api
+      - name: submit-ui
         paths:
-          - /
+          - /submit
+          - /types #for caching joke categories
         strip_path: false
 
   - name: rabbitmq-management
